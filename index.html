@@ -4,17 +4,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="Find out events, famous restaurants and weather information for rideshare drivers">
-    <title>RideShare Guide</title>
+    <title>NiteOut</title>
     <link href="main.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
       <header>
-          <h1>RideShare Guide</h1>
+          <h1>NiteOut</h1>
       </header>
       <main>
         <form action="#" id="js-form">
             <fieldset>
-                <legend>Find out what's happening in your area to find more rides!</legend>
+                <legend>Find out what's happening in your city!</legend>
                 <label for="city">Enter a city:</label>
                 <input type="text" placeholder="ex: Los Angeles, New York City..." id="city" required>
                 <label for="state">Enter a state:</label>
@@ -23,8 +23,9 @@
             </fieldset>
         </form>
         <hr>
-        <section role="region">
-        <h2>Results</h2>
+        <section role="region" aria-live="assertive" >
+        <div class="js-results"></div>
+        
         <div class="js-weather"></div>
 
         <div class="js-city-info"></div>
