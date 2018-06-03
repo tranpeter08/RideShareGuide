@@ -1,0 +1,64 @@
+*{
+    box-sizing: border-box;
+}
+body{
+    margin: 0;
+}
+
+main{
+    margin: 10px;
+}
+
+h1{
+    text-align: center;
+    background: rgba(0,0,0,0.5);
+    color: antiquewhite;
+    padding: 15px;
+    margin-top:0;
+}
+
+fieldset{
+    text-align: center;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    border: none;
+    font-size: 20px;
+}
+
+input{
+    font-size: 16px;
+    margin-top: 5px;
+}
+
+.block{
+    display: block;
+}
+
+button{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    font-size: 20px;
+
+}
+
+img{
+    width: 200px;
+}
+h2{
+text-align: center;
+}
+
+.display{
+    text-align: center;
+}
+
+li{
+    list-style-type: none;
+}
+
+.js-border{
+    border: 2px grey solid;
+    border-radius: 5px;
+}

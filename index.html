@@ -6,6 +6,7 @@
     <meta name="description" content="Find out events, famous restaurants and weather information for rideshare drivers">
     <title>NiteOut</title>
     <link href="main.css" rel="stylesheet" type="text/css" />
+    <link href="float.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
       <header>
@@ -15,25 +16,34 @@
         <form action="#" id="js-form">
             <fieldset>
                 <legend>Find out what's happening in your city!</legend>
-                <label for="city">Enter a city:</label>
-                <input type="text" placeholder="ex: Los Angeles, New York City..." id="city" required>
-                <label for="state">Enter a state:</label>
-                <input type="text" placeholder="ex: Texas, MI..." id="state" required>
-                <button type="submit">Submit</button>
+                <label class="" for="city">Enter a city:</label>
+                <input class="" type="text" placeholder="ex: Los Angeles, New York City..." id="city" required><br>
+                <label class="" for="state">Enter a state:</label>
+                <input class="" type="text" placeholder="ex: Texas, MI..." id="state" required>
+                <button class="block" type="submit">Submit</button>
             </fieldset>
         </form>
         <hr>
         <section role="region" aria-live="assertive" >
-        <div class="js-results"></div>
-        
-        <div class="js-weather"></div>
-
-        <div class="js-city-info"></div>
+            <div class="js-results"></div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="display js-weather"></div>
+                </div>
+                <div class="col-6">
+                    <div class="display js-city-info"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="display js-restaurants"></div>
+                </div>
+                <div class="col-6">   
+                    <div class="display js-events"></div>
+                </div>
+            </div>
             
-        <div class="js-restaurants"></div>
-
-        <div class="js-events"></div>
-        
+            
         </section>
       </main>  
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"
