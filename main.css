@@ -1,8 +1,15 @@
 *{
     box-sizing: border-box;
+    font-family: 'Cabin', sans-serif;
+    color:#CCA43B;
 }
+
 body{
     margin: 0;
+    background-image: url(https://i.imgur.com/flHHrPZ.png);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 main{
@@ -11,43 +18,117 @@ main{
 
 h1{
     text-align: center;
-    background: rgba(0,0,0,0.5);
-    color: antiquewhite;
+    background:rgba(39, 39, 39, 0.8);
     padding: 15px;
     margin-top:0;
 }
 
-fieldset{
-    text-align: center;
-    width: 70%;
+
+.header-button:active{
+    background: #bdbdbd;
+}
+.header-button{
+    font-family: 'BioRhyme', serif;
+    color:#CCA43B;
+    font-size:45px;
+    margin: 0;
+    background: none;
+    border: none;
+    border-radius: 15px;
+}
+
+
+button,
+input,
+.form-container{
+    border-radius: 15px;
+}
+
+button{
+    padding: 10px;
+    cursor: pointer;
+    background:rgb(231, 230, 230);
     margin-left: auto;
     margin-right: auto;
-    border: none;
+    margin-top: 20px;
     font-size: 20px;
+    transition: 0.2s;
+}
+
+button:hover{
+    background-color: #242F40;
+}
+
+.submit{
+    box-shadow: 0 4px 0 rgb(206, 222, 246);
+}
+
+.submit:active {
+    box-shadow: 0 2px 0 rgb(206, 222, 246);
+    transform: translateY(3px);
+}
+
+form{
+    margin-top: 25%;
+}
+
+.form-container{
+    background-color:rgba(39, 39, 39, 0.8);
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+}
+
+fieldset{
+    text-align: center;
+    border: none;
+    font-size: 24px;
+    color:#CCA43B;
+    padding: 0;
+
+}
+
+legend{
+    padding-bottom: 10px;
 }
 
 input{
     font-size: 16px;
-    margin-top: 5px;
+    margin-top: 20px;
+    padding:5px;
+    color: black;
 }
 
 .block{
     display: block;
 }
 
-button{
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 20px;
-    font-size: 20px;
-
+address{
+    font-size: 18px;
+    font-style: normal;
 }
 
 img{
-    width: 200px;
+    height: 100px;
 }
 h2{
-text-align: center;
+    font-size: 35px;
+    text-align: center;
+    color:#CCA43B;
+    text-shadow: 2px 2px black;
+}
+
+h3{
+    font-size: 28px;
+}
+
+.city-stats-h3{
+    margin-bottom: 64px;
+}
+
+h4{
+    font-size: 20px;
+    margin: 16px 0;
 }
 
 .display{
@@ -58,7 +139,26 @@ li{
     list-style-type: none;
 }
 
+ul,
+li{
+    padding: 0;
+}
+
 .js-border{
     border: 2px grey solid;
-    border-radius: 5px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    background-color:white;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+p,
+h5{
+    font-size: 18px;
+    margin: 16px 0;
+}
+
+.js-height-small>p:last-of-type{
+    margin-bottom: 64px;
 }

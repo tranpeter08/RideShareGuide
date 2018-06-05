@@ -3,29 +3,37 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <meta name="description" content="Find out events, famous restaurants and weather information for your city!">
+    <meta name="description" content="Find out events, famous restaurants and weather information for your city in the US!">
     <title>NiteOut</title>
     <link href="main.css" rel="stylesheet" type="text/css" />
     <link href="float.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=BioRhyme" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cabin" rel="stylesheet">
   </head>
   <body>
-      <header>
-          <h1>NiteOut</h1>
-      </header>
+      <div>
+        <header role="banner">
+            <h1><button class='header-button' type="button">NiteOut</button></h1>
+        </header>
+    </div>
       <main>
-        <form action="#" id="js-form">
-            <fieldset>
-                <legend>Find out what's happening in your city!</legend>
-                <label class="" for="city">Enter a city:</label>
-                <input class="" type="text" placeholder="ex: Los Angeles, New York City..." id="city" required><br>
-                <label class="" for="state">Enter a state:</label>
-                <input class="" type="text" placeholder="ex: Texas, MI..." id="state" required>
-                <button class="block" type="submit">Submit</button>
-            </fieldset>
+        <form role="form" action="#" id="js-form" class="form">
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-container">
+                        <fieldset>
+                            <legend>Find out what's happening in your city!</legend>
+                            <label class="" for="city-state">Enter a US city and state:</label>
+                            <input class="" type="text" placeholder="ex: Dallas, TX..." id="city-state" required>
+                            <button class="block submit" type="submit">Check It Out!</button>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
         </form>
-        <hr>
-        <section role="region" aria-live="assertive" >
-            <div class="js-results"></div>
+        
+        <section role="region"  aria-live="assertive" >
+            <div class="display js-results"></div>
             <div class="row">
                 <div class="col-6">
                     <div class="display js-weather"></div>
@@ -42,8 +50,6 @@
                     <div class="display js-events"></div>
                 </div>
             </div>
-            
-            
         </section>
       </main>  
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"
