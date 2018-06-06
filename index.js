@@ -55,6 +55,7 @@ function noTicketmaster(){
 }
 
 function displayTicketmasterData(results){
+    console.log(results)
     if(results._embedded == undefined){
         noTicketmaster();
     }else{
@@ -70,12 +71,14 @@ function displayTicketmasterData(results){
 }
 
 //get API data from Ticket Master 
-function getTicketmasterData(aLocation, callBack){
+function getTicketmasterData(aLocation, aLatLon, callBack){
+    console.log(aLatLon);
     const requestURL = 'https://app.ticketmaster.com/discovery/v2/events.json?size=5&apikey=z1yWDATxAuenxouu5ujPMPXc8QyHgyh8'
     const settings = {
         data:{
             keyword: aLocation,
-            countryCode:'US'
+            countryCode:'US',
+            latlong: aLatLon
         },
         type: 'GET',
         async:true,
@@ -107,7 +110,6 @@ function renderRestaurants(item, index){
 }
 
 function displayZomatoData(results){
-    console.log(results);
     const {location, popularity, nightlife_index, best_rated_restaurant} = results;
     $('.js-city-info').html(`
         <div class='js-border js-height-small'>
@@ -162,7 +164,6 @@ function handleNoZomato(){
 }
 
 function handleInitZomatoData(initResults){
-    console.log(initResults);
     if(initResults.location_suggestions.length == 0){ 
         handleNoZomato()
     }
@@ -173,12 +174,14 @@ function handleInitZomatoData(initResults){
 }
 
 //get API data from Zomato 
-function getZomatoDataInit(aLocation, callBack){
+function getZomatoDataInit(aLocation,aLat,aLon, callBack){
     const ZOMATO_KEY = 'abda2f58116a5e1ef63ea8bbb843f6da'
     const initialRequestURL = 'https://developers.zomato.com/api/v2.1/locations?'
     const settings = {
         data:{
-            query: aLocation
+            query: aLocation,
+            lat: aLat,
+            lon: aLon
         },
         headers:{
             'Accept': 'application/json',
@@ -203,7 +206,6 @@ function noWeather(){
 
 //get API data from WeatherIO
 function displayDataWeather(results){
-    console.log(results);
     if(results == undefined){
        noWeather();
     }
@@ -223,22 +225,25 @@ function displayDataWeather(results){
 }
 
 //get API data from weather 
-function getWeatherData(aCityState,callBack){
+function getWeatherData(aCityState, aLat, aLon,callBack){
     const weatherURL = 'https://api.weatherbit.io/v2.0/current?'
     const query = {
         key:`2a0a26cd2e95437c9cd83e7a8e5d77b8`,
         units: 'I',
         city: aCityState,
-        country: 'US'
+        country: 'US',
+        lat: aLat,
+        lon: aLon
     };
-    $.getJSON(weatherURL, query, callBack);
+    $.getJSON(weatherURL, query, callBack)
+    .fail(showErr);
 }
 
 function clearResults(){
     $('.display').empty();
 }
 
-function headerButton(){
+function headerButtonClick(){
     $('.header-button').on('click', function(event){
     clearResults();
     })
@@ -248,16 +253,32 @@ function renderResultHead(aLocation){
     $('.js-results').html(`<h2 class='js-scroll'>Results for "${aLocation.trim()}"</h2>`);
 }
 
+function handlePosition(position){
+    let lat = position.coords.latitude;
+    let lon = position.coords.longitude;
+    getWeatherData('',lat,lon, displayDataWeather);
+    getZomatoDataInit('',lat,lon,handleInitZomatoData);
+    getTicketmasterData('',`${lat} ${lon}`,displayTicketmasterData);
+}
+
+function geoButtonClick(){
+    $('.geo-button').on('click', ()=>{
+        //get coordinates
+        //get data
+        clearResults();
+        navigator.geolocation.getCurrentPosition(handlePosition);
+    })
+}
+
 //user clicks submit, updates user input
 function submitButtonClick(){
     $('#js-form').on('submit', (event)=>{
         event.preventDefault();
-        
         clearResults();
         let cityState = $('#city-state').val();
-        getWeatherData(cityState, displayDataWeather);
-        getZomatoDataInit(cityState,handleInitZomatoData);
-        getTicketmasterData(cityState,displayTicketmasterData);
+        getWeatherData(cityState,'','', displayDataWeather);
+        getZomatoDataInit(cityState,'','',handleInitZomatoData);
+        getTicketmasterData(cityState,'',displayTicketmasterData);
         renderResultHead(cityState);
         $('input').val("");
     })
@@ -265,7 +286,8 @@ function submitButtonClick(){
 
 function runThis(){
     submitButtonClick();
-    headerButton();
+    headerButtonClick();
+    geoButtonClick();
 }
 
 $(runThis);
