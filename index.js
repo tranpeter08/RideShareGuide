@@ -1,11 +1,13 @@
 "use strict";
 
 function showErr(err){
+    //display error data on results
     console.log(err);
 }
 
+//display time in different format
 function renderDateTime(aTime){
-    if(aTime == undefined){
+    if(aTime === undefined){
         return `Unavialable`
     }else{
         let date = new Date(aTime);
@@ -25,8 +27,8 @@ function renderDateTime(aTime){
         else{
             hour = milTime;
         }
-        if(hour == 0){
-            hour==12
+        if(hour === 0){
+            hour === 12
         }
         let minute = date.getMinutes();
         minute = (minute <10)? minute + '0': minute;
@@ -59,8 +61,7 @@ function noTicketmaster(){
 }
 
 function displayTicketmasterData(results){
-    console.log(results)
-    if(results._embedded == undefined){
+    if(results._embedded === undefined){
         noTicketmaster();
     }else{
     $('.js-events').hide().html(`
@@ -92,7 +93,7 @@ function getTicketmasterData(aLocation, callBack){
 }
 
 function renderStockPhoto(featImage){
-   return (featImage == "")? 'https://i.imgur.com/63HPxXC.jpg': featImage;
+   return (featImage === "")? 'https://i.imgur.com/63HPxXC.jpg': featImage;
 }
 
 function renderRestaurants(item, index){
@@ -107,8 +108,7 @@ function renderRestaurants(item, index){
             <p>Customer Rating: ${user_rating.aggregate_rating}/5</p>
             <address>${location.address}</address>
         </li>
-    `
-    }
+    `}
 }
 
 function displayZomatoData(results){
@@ -153,7 +153,7 @@ function handleNoZomato(){
 }
 
 function handleInitZomatoData(initResults){
-    if(initResults.location_suggestions.length == 0){ 
+    if(initResults.location_suggestions.length === 0){ 
         handleNoZomato()
     }
     else{
@@ -201,7 +201,7 @@ function extractForTicketMaster(results){
 
 //get API data from WeatherIO
 function displayDataWeather(results){
-    if(results == undefined){
+    if(results === undefined){
        noWeather();
     }
     else{
@@ -253,28 +253,24 @@ function renderResultHead(aLocation){
 function handlePosition(position){
     let lat = position.coords.latitude;
     let lon = position.coords.longitude;
-    console.log(`${lat}, ${lon}`)
     getWeatherData('',lat,lon, displayDataWeather);
     getZomatoDataInit('',lat,lon,handleInitZomatoData);
 }
 
 function resetButtonClick(){
-    $('.js-reset-button').on('click',()=>{
+    $('.js-reset').on('click','.js-reset-button',()=>{
         clearResults();
         $('.form-container').fadeIn('slow');
     })
 }
 
 function renderResetButton(){
-    $('.js-reset-button').hide().html(`
-        <div>
+    $('.js-reset').hide().html(`
             <button class="js-reset-button">Start New Search</button>
-        </div>
     `).delay(3500).fadeIn('slow');
 }
 
 //get coordinates
-//get data
 function geoButtonClick(){
     $('.geo-button').on('click', ()=>{
         clearResults();

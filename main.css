@@ -68,11 +68,12 @@ button:hover{
     margin-top: 20px;
 }
 
+.js-reset-button,
 .geo-button,
 .submit-button{
     box-shadow: 0 3px 0 #f8f1e5;
 }
-
+.js-reset-button:active,
 .geo-button:active,
 .submit-button:active{
     box-shadow: 0 2px 0 #f8f1e5;
@@ -147,6 +148,7 @@ img{
     height: 100px;
     border-radius: 15px;
 }
+
 h2{
     font-family: 'BioRhyme', serif;
     font-size: 35px;
@@ -197,3 +199,6 @@ p{
 text-shadow: .2px .2px  black;
 }
 
+.js-reset-button{
+    margin-bottom: 10px;
+}
