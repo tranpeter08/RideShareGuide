@@ -5,29 +5,33 @@ function showErr(err){
 }
 
 function renderDateTime(aTime){
-    let date = new Date(aTime);
-    const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-    const weekDays = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-    let weekDay = weekDays[date.getDay()];
-    let month = months[date.getMonth()];
-    let day = date.getDate();
-    let year = date.getFullYear();
-    let milTime = date.getHours();
-    let timePeriod = 'AM';
-    let hour;
-    if(milTime > 11){
-      hour = milTime-12;
-      timePeriod = 'PM'
+    if(aTime == undefined){
+        return `Unavialable`
+    }else{
+        let date = new Date(aTime);
+        const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+        const weekDays = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+        let weekDay = weekDays[date.getDay()];
+        let month = months[date.getMonth()];
+        let day = date.getDate();
+        let year = date.getFullYear();
+        let milTime = date.getHours();
+        let timePeriod = 'AM';
+        let hour;
+        if(milTime > 11){
+            hour = milTime-12;
+            timePeriod = 'PM'
+        }
+        else{
+            hour = milTime;
+        }
+        if(hour == 0){
+            hour==12
+        }
+        let minute = date.getMinutes();
+        minute = (minute <10)? minute + '0': minute;
+        return `${weekDay} ${month} ${day}, ${year} @ ${hour}:${minute} ${timePeriod}`
     }
-    else{
-        hour = milTime;
-    }
-    if(hour == 0){
-      hour==12
-    }
-    let minute = date.getMinutes();
-    minute = (minute <10)? minute + '0': minute;
-    return `${weekDay} ${month} ${day}, ${year} @ ${hour}:${minute} ${timePeriod}`
 }
 
 function renderEvents(item){
@@ -39,19 +43,19 @@ function renderEvents(item){
             <h4><a href='${url}' target='_blank'>${name}</a></h4>
             <img src="${images[0].url}" alt="event picture">
             <h5>${_embedded.venues[0].name}</h5>
-            <p>Date and time: ${renderDateTime(dates.start.dateTime)}</p>
+            <p>When: ${renderDateTime(dates.start.dateTime)}</p>
             <address>${address.line1}, ${city.name}, ${state.stateCode} ${postalCode}</address>
         </li>
     `
 }
 
 function noTicketmaster(){
-    $('.js-events').html(`
-        <div class='js-border js-height-big'>
+    $('.js-events').hide().html(`
+        <div class='js-border js-event-results'>
             <h3>Events</h3>
             <p>No event information found</p>
         </div>
-    `)
+    `).delay(500).fadeIn('slow')
 }
 
 function displayTicketmasterData(results){
@@ -59,26 +63,24 @@ function displayTicketmasterData(results){
     if(results._embedded == undefined){
         noTicketmaster();
     }else{
-    $('.js-events').html(`
-        <div class='js-border js-height-big'>
+    $('.js-events').hide().html(`
+        <div class='js-border'>
             <h3>Events</h3>
             <ul>
                 ${results._embedded.events.map((item,index)=> renderEvents(item)).join('')}
             </ul>
         </div>
-    `)
+    `).delay(500).fadeIn('slow');
     }
 }
 
 //get API data from Ticket Master 
-function getTicketmasterData(aLocation, aLatLon, callBack){
-    console.log(aLatLon);
+function getTicketmasterData(aLocation, callBack){
     const requestURL = 'https://app.ticketmaster.com/discovery/v2/events.json?size=5&apikey=z1yWDATxAuenxouu5ujPMPXc8QyHgyh8'
     const settings = {
         data:{
-            keyword: aLocation,
+            keyword:aLocation,
             countryCode:'US',
-            latlong: aLatLon
         },
         type: 'GET',
         async:true,
@@ -111,21 +113,14 @@ function renderRestaurants(item, index){
 
 function displayZomatoData(results){
     const {location, popularity, nightlife_index, best_rated_restaurant} = results;
-    $('.js-city-info').html(`
-        <div class='js-border js-height-small'>
-            <h3 class='city-stats-h3'>City stats for ${location.title}, ${location.country_name}</h3>
-            <p>Nightlife score: ${nightlife_index}/5</p>
-            <p>Popularity score: ${popularity}/5</p>
-        </div>
-    `);
-    $('.js-restaurants').html(`
+    $('.js-restaurants').hide().html(`
         <div class='js-border js-height-big'>
             <h3>Restuarants</h3>
             <ul>
                 ${best_rated_restaurant.map((item, index) => renderRestaurants(item, index)).join('')}
             </ul>
         <div>
-    `)
+    `).delay(500).fadeIn('slow');
 }
 
 function getZomatoDataDetail(anID,aType,callBack){
@@ -149,18 +144,12 @@ function getZomatoDataDetail(anID,aType,callBack){
 }
 
 function handleNoZomato(){
-    $('.js-city-info').html(`
-        <div class='js-border js-height-small'>
-            <h3>City info</h3>
-            <p>No city info found<p>
-        </div>
-    `);
-    $('.js-restaurants').html(`
-    <div class='js-border js-height-big'>
+    $('.js-restaurants').hide().html(`
+    <div class='js-border'>
         <h3>Restuarants</h3>
         <p>No restaurant information found<p>
     <div>
-    `)
+    `).delay(500).fadeIn('slow');
 }
 
 function handleInitZomatoData(initResults){
@@ -196,12 +185,18 @@ function getZomatoDataInit(aLocation,aLat,aLon, callBack){
 }
 
 function noWeather(){
-    $('.js-weather').html(`
-        <div class='js-border js-height-small'>
+    $('.js-weather').hide().html(`
+        <div class='js-border js-weather-box'>
             <h3 class="js-weather-header">Weather</h3>
             <p>No weather information found<p>
         </div>
-    `)
+    `).delay(500).fadeIn('slow')
+}
+
+//extract location data from weather for ticketmaster
+function extractForTicketMaster(results){
+    const {city_name,state_code} = results.data[0];
+    getTicketmasterData(`${city_name}, ${state_code}`,displayTicketmasterData);
 }
 
 //get API data from WeatherIO
@@ -211,8 +206,8 @@ function displayDataWeather(results){
     }
     else{
     const {city_name, state_code, country_code, temp, weather} = results.data[0];
-    $('.js-weather').html(`
-        <div class='js-border js-height-small'>
+    $('.js-weather').hide().html(`
+        <div class='js-border js-weather-box'>
             <h3 class="js-weather-header">Weather for ${city_name}, ${state_code}, ${country_code}</h3>
             <img src="https://www.weatherbit.io/static/img/icons/${weather.icon}.png" alt="Icon repesention of the current weather" class="js-weather-img">
             <div class="js-weather-p">
@@ -220,7 +215,8 @@ function displayDataWeather(results){
                 <p>Description: ${weather.description}</p>
             </div>
         </div>
-    `);
+    `).fadeIn('slow');
+    extractForTicketMaster(results);
     }
 }
 
@@ -246,27 +242,46 @@ function clearResults(){
 function headerButtonClick(){
     $('.header-button').on('click', function(event){
     clearResults();
+    $('.form-container').fadeIn('slow');
     })
 }
 
 function renderResultHead(aLocation){
-    $('.js-results').html(`<h2 class='js-scroll'>Results for "${aLocation.trim()}"</h2>`);
+    $('.js-results').hide().html(`<h2 class='js-scroll'>Results ${aLocation.trim()}</h2>`).delay(500).fadeIn(1000);
 }
 
 function handlePosition(position){
     let lat = position.coords.latitude;
     let lon = position.coords.longitude;
+    console.log(`${lat}, ${lon}`)
     getWeatherData('',lat,lon, displayDataWeather);
     getZomatoDataInit('',lat,lon,handleInitZomatoData);
-    getTicketmasterData('',`${lat} ${lon}`,displayTicketmasterData);
 }
 
+function resetButtonClick(){
+    $('.js-reset-button').on('click',()=>{
+        clearResults();
+        $('.form-container').fadeIn('slow');
+    })
+}
+
+function renderResetButton(){
+    $('.js-reset-button').hide().html(`
+        <div>
+            <button class="js-reset-button">Start New Search</button>
+        </div>
+    `).delay(3500).fadeIn('slow');
+}
+
+//get coordinates
+//get data
 function geoButtonClick(){
     $('.geo-button').on('click', ()=>{
-        //get coordinates
-        //get data
         clearResults();
+        renderResultHead('near you...');
         navigator.geolocation.getCurrentPosition(handlePosition);
+        $('.form-container').fadeOut('slow');
+        renderResetButton();
     })
 }
 
@@ -278,9 +293,11 @@ function submitButtonClick(){
         let cityState = $('#city-state').val();
         getWeatherData(cityState,'','', displayDataWeather);
         getZomatoDataInit(cityState,'','',handleInitZomatoData);
-        getTicketmasterData(cityState,'',displayTicketmasterData);
-        renderResultHead(cityState);
+        getTicketmasterData(cityState,displayTicketmasterData);
+        renderResultHead(`for "${cityState}"`);
         $('input').val("");
+        $('.form-container').fadeOut(500);
+        renderResetButton();
     })
 }
 
@@ -288,6 +305,7 @@ function runThis(){
     submitButtonClick();
     headerButtonClick();
     geoButtonClick();
+    resetButtonClick();
 }
 
 $(runThis);
