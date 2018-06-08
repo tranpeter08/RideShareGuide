@@ -61,6 +61,7 @@ function noTicketmaster(){
 }
 
 function displayTicketmasterData(results){
+    console.log(results);
     if(results._embedded === undefined){
         noTicketmaster();
     }else{
@@ -112,6 +113,7 @@ function renderRestaurants(item, index){
 }
 
 function displayZomatoData(results){
+    console.log(results);
     const {location, popularity, nightlife_index, best_rated_restaurant} = results;
     $('.js-restaurants').hide().html(`
         <div class='js-border js-height-big'>
@@ -201,6 +203,7 @@ function extractForTicketMaster(results){
 
 //get API data from WeatherIO
 function displayDataWeather(results){
+    console.log(results);
     if(results === undefined){
        noWeather();
     }
@@ -234,7 +237,23 @@ function getWeatherData(aCityState, aLat, aLon,callBack){
     $.getJSON(weatherURL, query, callBack)
     .fail(showErr);
 }
+//geocode api
+function getGeocodeAPI(cityState,callBack){
+    console.log(cityState,callBack);
+    const geoCode_URL = 'https://maps.googleapis.com/maps/api/geocode/json';
+    const query = { 
+      key:'AIzaSyAx0NM7NscrHkyhMuP5E6hEMCkmR_ToUBg',
+      address: cityState
+    }
+    $.getJSON(geoCode_URL,query,callBack);
+  }
+  
 
+  function showResults(results){
+    console.log(results);
+  }
+  
+//testing
 function clearResults(){
     $('.display').empty();
 }
@@ -287,6 +306,10 @@ function submitButtonClick(){
         event.preventDefault();
         clearResults();
         let cityState = $('#city-state').val();
+        //get google geocode api to do something with cityState
+        //get lat long
+        // change param to Lat Lon
+        getGeocodeAPI(cityState,showResults);
         getWeatherData(cityState,'','', displayDataWeather);
         getZomatoDataInit(cityState,'','',handleInitZomatoData);
         getTicketmasterData(cityState,displayTicketmasterData);
