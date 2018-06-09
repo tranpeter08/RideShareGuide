@@ -61,7 +61,6 @@ function noTicketmaster(){
 }
 
 function displayTicketmasterData(results){
-    console.log(results);
     if(results._embedded === undefined){
         noTicketmaster();
     }else{
@@ -113,7 +112,6 @@ function renderRestaurants(item, index){
 }
 
 function displayZomatoData(results){
-    console.log(results);
     const {location, popularity, nightlife_index, best_rated_restaurant} = results;
     $('.js-restaurants').hide().html(`
         <div class='js-border js-height-big'>
@@ -205,7 +203,6 @@ function extractForTicketMaster(results){
 
 //get API data from WeatherIO
 function displayDataWeather(results){
-    console.log(results);
     if(results === undefined){
        noWeather();
     }
@@ -225,8 +222,17 @@ function displayDataWeather(results){
     extractForTicketMaster(results);
 }
 
+//If results are not in the US
 function notInUS(){
-    $('.js-results').append(`<p>Please enter a valid US city and state.</p>`);
+    $('.js-results').append(`
+        <div class = 'row'>
+            <div class = 'col-12'>
+                <div class='js-not-US-box'>
+                    <p class='js-not-US'>Please enter a valid US city and state.</p>
+                <div>
+            <div>
+        </div>    
+    `)
 }
 
 function handleWeatherData(results){
@@ -248,6 +254,7 @@ function getWeatherData(aLat, aLon,callBack){
 }
 
 function handleGeoCodeData(data){
+    console.log(data);
     const {lat,lng} = data.results[0].geometry.location;
     //results[0].geometry.location.
     //lat lon
@@ -264,9 +271,6 @@ function getGeocodeAPI(cityState,callBack){
     }
     $.getJSON(geoCode_URL,query,callBack);
   }
-  
-
-//testing
 
 function clearResults(){
     $('.display').empty();
@@ -282,7 +286,6 @@ function headerButtonClick(){
 function renderResultHead(aLocation){
     $('.js-results').hide().html(`<h2>Results ${aLocation.trim()}</h2>`).delay(500).fadeIn(1000);
 }
-
 
 function resetButtonClick(){
     $('.js-reset').on('click','.js-reset-button',()=>{
@@ -314,8 +317,6 @@ function geoButtonClick(){
         renderResetButton();
     })
 }
-
-
 
 //user clicks submit, updates user input
 function submitButtonClick(){
