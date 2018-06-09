@@ -155,12 +155,14 @@ function handleNoZomato(){
 }
 
 function handleInitZomatoData(initResults){
-    if(initResults.location_suggestions.length === 0){ 
-        handleNoZomato()
-    }
-    else{
-        const {entity_id, entity_type}= initResults.location_suggestions[0];
-        getZomatoDataDetail(entity_id, entity_type, displayZomatoData);
+    if(initResults.location_suggestions[0].country_name === 'United States'){
+        if(initResults.location_suggestions.length === 0){ 
+            handleNoZomato()
+        }
+        else{
+            const {entity_id, entity_type}= initResults.location_suggestions[0];
+            getZomatoDataDetail(entity_id, entity_type, displayZomatoData);
+        }
     }
 }
 
@@ -219,27 +221,42 @@ function displayDataWeather(results){
             </div>
         </div>
     `).fadeIn('slow');
-    extractForTicketMaster(results);
     }
+    extractForTicketMaster(results);
+}
+
+function notInUS(){
+    $('.js-results').append(`<p>Please enter a valid US city and state.</p>`);
+}
+
+function handleWeatherData(results){
+//results.data[0], country_code, 'US'
+return (results.data[0].country_code !== 'US') ? notInUS() : displayDataWeather(results);
 }
 
 //get API data from weather 
-function getWeatherData(aCityState, aLat, aLon,callBack){
+function getWeatherData(aLat, aLon,callBack){
     const weatherURL = 'https://api.weatherbit.io/v2.0/current?'
     const query = {
         key:`2a0a26cd2e95437c9cd83e7a8e5d77b8`,
         units: 'I',
-        city: aCityState,
-        country: 'US',
         lat: aLat,
         lon: aLon
     };
     $.getJSON(weatherURL, query, callBack)
     .fail(showErr);
 }
+
+function handleGeoCodeData(data){
+    const {lat,lng} = data.results[0].geometry.location;
+    //results[0].geometry.location.
+    //lat lon
+    getWeatherData(lat,lng,handleWeatherData);
+    getZomatoDataInit('', lat, lng, handleInitZomatoData);
+}
+
 //geocode api
 function getGeocodeAPI(cityState,callBack){
-    console.log(cityState,callBack);
     const geoCode_URL = 'https://maps.googleapis.com/maps/api/geocode/json';
     const query = { 
       key:'AIzaSyAx0NM7NscrHkyhMuP5E6hEMCkmR_ToUBg',
@@ -249,32 +266,23 @@ function getGeocodeAPI(cityState,callBack){
   }
   
 
-  function showResults(results){
-    console.log(results);
-  }
-  
 //testing
+
 function clearResults(){
     $('.display').empty();
 }
 
 function headerButtonClick(){
     $('.header-button').on('click', function(event){
-    clearResults();
-    $('.form-container').fadeIn('slow');
+        clearResults();
+        $('.form-container').fadeIn('slow');
     })
 }
 
 function renderResultHead(aLocation){
-    $('.js-results').hide().html(`<h2 class='js-scroll'>Results ${aLocation.trim()}</h2>`).delay(500).fadeIn(1000);
+    $('.js-results').hide().html(`<h2>Results ${aLocation.trim()}</h2>`).delay(500).fadeIn(1000);
 }
 
-function handlePosition(position){
-    let lat = position.coords.latitude;
-    let lon = position.coords.longitude;
-    getWeatherData('',lat,lon, displayDataWeather);
-    getZomatoDataInit('',lat,lon,handleInitZomatoData);
-}
 
 function resetButtonClick(){
     $('.js-reset').on('click','.js-reset-button',()=>{
@@ -285,8 +293,15 @@ function resetButtonClick(){
 
 function renderResetButton(){
     $('.js-reset').hide().html(`
-            <button class="js-reset-button">Start New Search</button>
+        <button class="js-reset-button">Start New Search</button>
     `).delay(3500).fadeIn('slow');
+}
+
+function handlePosition(position){
+    let lat = position.coords.latitude;
+    let lon = position.coords.longitude;
+    getWeatherData(lat, lon, handleWeatherData);
+    getZomatoDataInit('',lat,lon,handleInitZomatoData);
 }
 
 //get coordinates
@@ -300,19 +315,21 @@ function geoButtonClick(){
     })
 }
 
+
+
 //user clicks submit, updates user input
 function submitButtonClick(){
     $('#js-form').on('submit', (event)=>{
         event.preventDefault();
         clearResults();
         let cityState = $('#city-state').val();
-        //get google geocode api to do something with cityState
-        //get lat long
+        //  get google geocode api to do something with cityState
+        //  get lat long
         // change param to Lat Lon
-        getGeocodeAPI(cityState,showResults);
-        getWeatherData(cityState,'','', displayDataWeather);
-        getZomatoDataInit(cityState,'','',handleInitZomatoData);
-        getTicketmasterData(cityState,displayTicketmasterData);
+        getGeocodeAPI(cityState, handleGeoCodeData);
+        //getWeatherData(cityState,'','', displayDataWeather);
+        //getZomatoDataInit(cityState,'','',handleInitZomatoData);
+        //getTicketmasterData(cityState,displayTicketmasterData);
         renderResultHead(`for "${cityState}"`);
         $('input').val("");
         $('.form-container').fadeOut(500);
@@ -328,3 +345,9 @@ function runThis(){
 }
 
 $(runThis);
+
+//
+//call back for geo code to pass data onto other functions
+//geocode, ajax request, get data
+//pass value to geocode
+//handle submit, set variable for input value
