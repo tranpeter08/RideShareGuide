@@ -13,9 +13,12 @@
   </head>
   <body>
         <header role="banner">
-            <h1><button class='header-button' type="button">NiteOut</button></h1>
+            <h1>
+                <button class='header-button' type="button" aria-label="Reset form">NiteOut </button>
+            </h1>
         </header>
-      <main>
+        <main>
+        <div class="display js-error"></div>
         <form role="form" action="#" id="js-form" class="">
             <div class="row">
                 <div class="col-12">
@@ -23,7 +26,7 @@
                         <fieldset>
                             <legend>Find out what's happening in your city!</legend>
                             <label class="" for="city-state">Enter a US city and state:</label>
-                            <input class="" type="text" placeholder="ex: Los Angeles, CA..." id="city-state" required>
+                            <input class="" type="text" placeholder="ex: Los Angeles, CA..." id="city-state" required autofocus>
                             <button class="block submit-button" type="submit">Check It Out!</button>
                             <p>Or... find out what's near you!</p>
                             <button class='geo-button' type="button">Whats near me?</button>
@@ -33,7 +36,7 @@
             </div>
         </form>
         
-        <section role="region"  aria-live="assertive" >
+        <section role="region"  aria-live="assertive">
             <div class="display js-results"></div>
             <div class="row">
                 <div class="col-12">
@@ -55,7 +58,7 @@
                 </div>  
             </div>
         </section>
-      </main>  
+        </main>  
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"
     integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
     crossorigin="anonymous"></script>
