@@ -236,8 +236,7 @@ function notInUS(){
 }
 
 function handleWeatherData(results){
-//results.data[0], country_code, 'US'
-return (results.data[0].country_code !== 'US') ? notInUS() : displayDataWeather(results);
+    return (results.data[0].country_code !== 'US') ? notInUS() : displayDataWeather(results);
 }
 
 //get API data from weather 
@@ -255,11 +254,13 @@ function getWeatherData(aLat, aLon,callBack){
 
 function handleGeoCodeData(data){
     console.log(data);
-    const {lat,lng} = data.results[0].geometry.location;
-    //results[0].geometry.location.
-    //lat lon
-    getWeatherData(lat,lng,handleWeatherData);
-    getZomatoDataInit('', lat, lng, handleInitZomatoData);
+    if(data.results.length === 0){
+        notInUS();
+    }else{
+        const {lat,lng} = data.results[0].geometry.location;
+        getWeatherData(lat,lng,handleWeatherData);
+        getZomatoDataInit('', lat, lng, handleInitZomatoData);
+    }
 }
 
 //geocode api
@@ -270,7 +271,7 @@ function getGeocodeAPI(cityState,callBack){
       address: cityState
     }
     $.getJSON(geoCode_URL,query,callBack);
-  }
+}
 
 function clearResults(){
     $('.display').empty();
@@ -324,13 +325,7 @@ function submitButtonClick(){
         event.preventDefault();
         clearResults();
         let cityState = $('#city-state').val();
-        //  get google geocode api to do something with cityState
-        //  get lat long
-        // change param to Lat Lon
         getGeocodeAPI(cityState, handleGeoCodeData);
-        //getWeatherData(cityState,'','', displayDataWeather);
-        //getZomatoDataInit(cityState,'','',handleInitZomatoData);
-        //getTicketmasterData(cityState,displayTicketmasterData);
         renderResultHead(`for "${cityState}"`);
         $('input').val("");
         $('.form-container').fadeOut(500);
@@ -346,9 +341,3 @@ function runThis(){
 }
 
 $(runThis);
-
-//
-//call back for geo code to pass data onto other functions
-//geocode, ajax request, get data
-//pass value to geocode
-//handle submit, set variable for input value
