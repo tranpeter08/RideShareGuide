@@ -17,7 +17,7 @@ Check it out at https://tranpeter08.github.io/NiteOut/
 
 # Technical
 - Using a responsive layout, NiteOut is designed to be viewed on desktop and mobile devices. 
-- This web app was built using HTML5, CSS, Javasceript and jQuery.
+- This web app was built using HTML5, CSS, Javascript and jQuery.
 - The web app utilizes 5 different API's for finding information for user location, geocode, weather, resutaurants and events: 
   1. HTML5 Geolocation
   2. Google Maps
