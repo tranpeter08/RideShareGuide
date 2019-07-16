@@ -1,11 +1,9 @@
 "use strict";
 
 function showErr(err){
-    //display error data on results
-    console.log(err);
+    console.error(err);
 }
 
-//display time in different format
 function renderDateTime(aTime){
     if(aTime === undefined){
         return `Unavialable`
@@ -75,7 +73,6 @@ function displayTicketmasterData(results){
     }
 }
 
-//get API data from Ticket Master 
 function getTicketmasterData(aLocation, callBack){
     const requestURL = 'https://app.ticketmaster.com/discovery/v2/events.json?size=5&apikey=z1yWDATxAuenxouu5ujPMPXc8QyHgyh8'
     const settings = {
@@ -164,7 +161,6 @@ function handleInitZomatoData(initResults){
     }
 }
 
-//get API data from Zomato 
 function getZomatoDataInit(aLocation,aLat,aLon, callBack){
     const ZOMATO_KEY = 'abda2f58116a5e1ef63ea8bbb843f6da'
     const initialRequestURL = 'https://developers.zomato.com/api/v2.1/locations?'
@@ -195,13 +191,11 @@ function noWeather(){
     `).delay(500).fadeIn('slow')
 }
 
-//extract location data from weather for ticketmaster
 function extractForTicketMaster(results){
     const {city_name,state_code} = results.data[0];
     getTicketmasterData(`${city_name}, ${state_code}`,displayTicketmasterData);
 }
 
-//get API data from WeatherIO
 function displayDataWeather(results){
     if(results === undefined){
        noWeather();
@@ -222,7 +216,6 @@ function displayDataWeather(results){
     extractForTicketMaster(results);
 }
 
-//If results are not in the US
 function notInUS(){
     $('.js-results').append(`
         <div class = 'row'>
@@ -239,7 +232,6 @@ function handleWeatherData(results){
     return (results.data[0].country_code !== 'US') ? notInUS() : displayDataWeather(results);
 }
 
-//get API data from weather 
 function getWeatherData(aLat, aLon,callBack){
     const weatherURL = 'https://api.weatherbit.io/v2.0/current?'
     const query = {
@@ -253,7 +245,6 @@ function getWeatherData(aLat, aLon,callBack){
 }
 
 function handleGeoCodeData(data){
-    console.log(data);
     if(data.results.length === 0){
         notInUS();
     }else{
@@ -263,7 +254,6 @@ function handleGeoCodeData(data){
     }
 }
 
-//geocode api
 function getGeocodeAPI(cityState,callBack){
     const geoCode_URL = 'https://maps.googleapis.com/maps/api/geocode/json';
     const query = { 
@@ -308,7 +298,6 @@ function handlePosition(position){
     getZomatoDataInit('',lat,lon,handleInitZomatoData);
 }
 
-//get coordinates
 function geoButtonClick(){
     $('.geo-button').on('click', ()=>{
         clearResults();
@@ -319,7 +308,6 @@ function geoButtonClick(){
     })
 }
 
-//user clicks submit, updates user input
 function submitButtonClick(){
     $('#js-form').on('submit', (event)=>{
         event.preventDefault();
@@ -333,11 +321,11 @@ function submitButtonClick(){
     })
 }
 
-function runThis(){
+function docReady(){
     submitButtonClick();
     headerButtonClick();
     geoButtonClick();
     resetButtonClick();
 }
 
-$(runThis);
+$(docReady);
