@@ -1,0 +1,25 @@
+{
+  "name": "niteout",
+  "version": "1.0.0",
+  "description": "Want to know what's going on in your city or where to eat? Use NiteOut to find out! (Works best with US cities...)",
+  "main": "server.js",
+  "dependencies": {
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "nodemon": "^1.19.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tranpeter08/NiteOut.git"
+  },
+  "author": "Peter Tran",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tranpeter08/NiteOut/issues"
+  },
+  "homepage": "https://github.com/tranpeter08/NiteOut#readme"
+}

@@ -1,0 +1,211 @@
+*{
+    box-sizing: border-box;
+    font-family: 'Cabin', sans-serif;
+    color:#ffce38;
+}
+
+body{
+    margin: 0;
+    background-image: url(https://i.imgur.com/flHHrPZ.png);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+main{
+    margin: 10px;
+}
+
+h1{
+    text-align: center;
+    background:rgba(39, 39, 39, 0.8);
+    padding: 15px;
+    margin: 0;
+}
+
+.header-button:active{
+    background: #bdbdbd;
+}
+
+.header-button{
+    font-family: 'BioRhyme', serif;
+    color:#ffce38;
+    font-size:45px;
+    margin: 0;
+    background: none;
+    border: none;
+    border-radius: 15px;
+    text-shadow: 2px 2px 0 black;
+}
+
+fieldset p{
+    font-size: 24px;
+}
+
+button,
+input,
+.form-container{
+    border-radius: 15px;
+}
+
+button{
+    padding: 10px;
+    cursor: pointer;
+    background:#426e86;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 20px;
+    transition: 0.2s;
+}
+
+button:hover{
+    background-color: #242F40;
+}
+
+.submit-button{
+    margin-top: 20px;
+}
+
+.js-reset-button,
+.geo-button,
+.submit-button{
+    box-shadow: 0 3px 0 #f8f1e5;
+}
+
+.js-reset-button:active,
+.geo-button:active,
+.submit-button:active{
+    box-shadow: 0 2px 0 #f8f1e5;
+    transform: translateY(3px);
+}
+
+.form-container{
+    margin-top: 10%;
+}
+
+.form-container{
+    background-color:rgba(39, 39, 39, 0.8);
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+}
+
+fieldset{
+    text-align: center;
+    border: none;
+    font-size: 24px;
+    padding: 0;
+}
+
+legend{
+    padding-bottom: 10px;
+}
+
+input{
+    font-size: 16px;
+    margin-top: 20px;
+    padding:5px;
+    color: black;
+}
+
+legend,
+label{
+    text-shadow: 1px 1px 1px black;
+}
+
+fieldset p{
+    color: #ffce38;
+}
+
+.block{
+    display: block;
+}
+
+h5,
+a,
+h4,
+p,
+address{
+    color: rgb(223, 85, 43);
+}
+
+a{
+    transition: 0.2s;
+}
+
+a:hover{
+    color: #242F40;
+}
+
+address{
+    font-style: normal;
+    font-size: 20px
+}
+
+img{
+    height: 100px;
+    border-radius: 15px;
+}
+
+h2{
+    font-family: 'BioRhyme', serif;
+    font-size: 35px;
+    text-align: center;
+    text-shadow: 2px 2px  black;
+}
+
+h3{
+    font-size: 28px;
+    font-family: 'BioRhyme', serif;
+    text-shadow: 1px 1px 1px black;
+}
+
+.display{
+    text-align: center;
+}
+
+li{
+    list-style-type: none;
+}
+
+ul,
+li{
+    padding: 0;
+}
+
+.js-not-US,
+.js-border{
+    border-radius: 10px;
+    margin-bottom: 20px;
+    background-color:#f8f5f2;
+    padding: 10px;
+}
+
+h4,
+p,
+h5{
+    font-size: 20px;
+    margin: 14px 0;
+}
+
+h5,
+h4,
+a,
+address,
+p{
+    text-shadow: .2px .2px  black;
+}
+
+.js-reset-button{
+    margin-bottom: 10px;
+}
+
+.js-not-US-box{
+    margin-bottom: 39px;
+}
+
+.header-button,
+h2,
+h3{
+    letter-spacing: 2px;
+}

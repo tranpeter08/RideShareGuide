@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="Find out events, famous restaurants and weather information for your city in the US!">
+    <title>NiteOut</title>
+    <link rel="icon" type="image/png" href="./favicon.ico">
+    <link href="main.css" rel="stylesheet" type="text/css" />
+    <link href="float.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=BioRhyme" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cabin" rel="stylesheet">
+    
+  </head>
+  <body>
+        <header role="banner">
+            <h1>
+                <button class='header-button' type="button" aria-label="Reset form">NiteOut </button>
+            </h1>
+        </header>
+        <main>
+        <div class="display js-error"></div>
+        <form role="form" action="#" id="js-form" class="">
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-container">
+                        <fieldset>
+                            <legend>Find out what's happening in your city!</legend>
+                            <label class="" for="city-state">Enter a US city and state:</label>
+                            <input class="" type="text" placeholder="ex: Los Angeles, CA..." id="city-state" required autofocus>
+                            <button class="block submit-button" type="submit">Check It Out!</button>
+                            <p>Or... find out what's near you!</p>
+                            <button class='geo-button' type="button">Whats near me?</button>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+        </form>
+        
+        <section role="region"  aria-live="assertive">
+            <div class="display js-results"></div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="display js-weather"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="display js-restaurants"></div>
+                </div>
+                <div class="col-6">   
+                    <div class="display js-events"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="display js-reset">
+                    </div>
+                </div>  
+            </div>
+        </section>
+        </main>  
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous"></script>
+    <script src="index.js"></script>
+  </body>
+</html>
