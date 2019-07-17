@@ -22,6 +22,10 @@ Font End:
 - Javascript 
 - jQuery
 
+Back End:
+- Node.js
+- Express
+
 3rd Party API's:
 - HTML5 Geolocation
 - Google Maps
