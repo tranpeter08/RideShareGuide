@@ -254,13 +254,9 @@ function handleGeoCodeData(data){
     }
 }
 
-function getGeocodeAPI(cityState,callBack){
-    const geoCode_URL = 'https://maps.googleapis.com/maps/api/geocode/json';
-    const query = { 
-      key:'AIzaSyAx0NM7NscrHkyhMuP5E6hEMCkmR_ToUBg',
-      address: cityState
-    }
-    $.getJSON(geoCode_URL,query,callBack);
+function getGeocodeAPI(cityState,callBack) {
+    const query = {address: cityState}
+    $.getJSON('/geocode', query, callBack);
 }
 
 function clearResults(){
