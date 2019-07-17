@@ -121,22 +121,19 @@ function displayZomatoData(results){
 }
 
 function getZomatoDataDetail(anID,aType,callBack){
-    const ZOMATO_KEY = 'abda2f58116a5e1ef63ea8bbb843f6da'
-    const secondRequestURL = 'https://developers.zomato.com/api/v2.1/location_details?'
     const settings = {
         data: {
             entity_id: anID,
             entity_type: aType
         },
         headers:{
-            'Accept': 'application/json',
-            'user-key': ZOMATO_KEY
+            'Accept': 'application/json'
         },
         dataType: 'json',
         type:'GET',
         success: callBack
     };
-    $.ajax(secondRequestURL,settings)
+    $.ajax('/zomato/details', settings)
     .fail(showErr);
 }
 
@@ -150,7 +147,6 @@ function handleNoZomato(){
 }
 
 function handleInitZomatoData(initResults){
-    console.log(initResults);
     if(initResults.location_suggestions[0].country_name === 'United States'){
         if(initResults.location_suggestions.length === 0){ 
             handleNoZomato()
@@ -163,7 +159,6 @@ function handleInitZomatoData(initResults){
 }
 
 function getZomatoDataInit(aLocation, aLat, aLon, callBack){
-    console.log(aLat, aLon);
     const settings = {
         data:{
             query: aLocation,
@@ -231,14 +226,12 @@ function handleWeatherData(results) {
 }
 
 function getWeatherData(aLat, aLon,callBack) {
-    const weatherURL = 'https://api.weatherbit.io/v2.0/current?'
     const query = {
-        key:`2a0a26cd2e95437c9cd83e7a8e5d77b8`,
         units: 'I',
         lat: aLat,
         lon: aLon
     };
-    $.getJSON(weatherURL, query, callBack)
+    $.getJSON('/weatherbit', query, callBack)
     .fail(showErr);
 }
 
