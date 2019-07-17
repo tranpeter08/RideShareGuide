@@ -150,6 +150,7 @@ function handleNoZomato(){
 }
 
 function handleInitZomatoData(initResults){
+    console.log(initResults);
     if(initResults.location_suggestions[0].country_name === 'United States'){
         if(initResults.location_suggestions.length === 0){ 
             handleNoZomato()
@@ -161,9 +162,8 @@ function handleInitZomatoData(initResults){
     }
 }
 
-function getZomatoDataInit(aLocation,aLat,aLon, callBack){
-    const ZOMATO_KEY = 'abda2f58116a5e1ef63ea8bbb843f6da'
-    const initialRequestURL = 'https://developers.zomato.com/api/v2.1/locations?'
+function getZomatoDataInit(aLocation, aLat, aLon, callBack){
+    console.log(aLat, aLon);
     const settings = {
         data:{
             query: aLocation,
@@ -171,18 +171,17 @@ function getZomatoDataInit(aLocation,aLat,aLon, callBack){
             lon: aLon
         },
         headers:{
-            'Accept': 'application/json',
-            'user-key': ZOMATO_KEY
+            'Accept': 'application/json'
         },
         dataType: 'json',
         type: 'GET',
         success: callBack,
     };
-    $.ajax(initialRequestURL,settings)
+    $.ajax('/zomato', settings)
     .fail(showErr);
 }
 
-function noWeather(){
+function noWeather() {
     $('.js-weather').hide().html(`
         <div class='js-border js-weather-box'>
             <h3 class="js-weather-header">Weather</h3>
@@ -191,16 +190,15 @@ function noWeather(){
     `).delay(500).fadeIn('slow')
 }
 
-function extractForTicketMaster(results){
+function extractForTicketMaster(results) {
     const {city_name,state_code} = results.data[0];
     getTicketmasterData(`${city_name}, ${state_code}`,displayTicketmasterData);
 }
 
 function displayDataWeather(results){
-    if(results === undefined){
+    if (results === undefined) {
        noWeather();
-    }
-    else{
+    } else {
     const {city_name, state_code, country_code, temp, weather} = results.data[0];
     $('.js-weather').hide().html(`
         <div class='js-border js-weather-box'>
@@ -216,7 +214,7 @@ function displayDataWeather(results){
     extractForTicketMaster(results);
 }
 
-function notInUS(){
+function notInUS() {
     $('.js-results').append(`
         <div class = 'row'>
             <div class = 'col-12'>
@@ -228,11 +226,11 @@ function notInUS(){
     `)
 }
 
-function handleWeatherData(results){
+function handleWeatherData(results) {
     return (results.data[0].country_code !== 'US') ? notInUS() : displayDataWeather(results);
 }
 
-function getWeatherData(aLat, aLon,callBack){
+function getWeatherData(aLat, aLon,callBack) {
     const weatherURL = 'https://api.weatherbit.io/v2.0/current?'
     const query = {
         key:`2a0a26cd2e95437c9cd83e7a8e5d77b8`,
@@ -245,17 +243,17 @@ function getWeatherData(aLat, aLon,callBack){
 }
 
 function handleGeoCodeData(data){
-    if(data.results.length === 0){
+    if (data.results.length === 0) {
         notInUS();
-    }else{
+    } else {
         const {lat,lng} = data.results[0].geometry.location;
         getWeatherData(lat,lng,handleWeatherData);
         getZomatoDataInit('', lat, lng, handleInitZomatoData);
     }
 }
 
-function getGeocodeAPI(cityState,callBack) {
-    const query = {address: cityState}
+function getGeocodeAPI(cityState, callBack) {
+    const query = {address: cityState};
     $.getJSON('/geocode', query, callBack);
 }
 

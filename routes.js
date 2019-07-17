@@ -24,24 +24,36 @@ router.get('/geocode', async (req, res) => {
     let resp = await fetch(GEOCODE_URL + queryStr, options);
     let data = await resp.json();
     
-    if (data.status !== 'OK') {
-      throw {
-        reason: 'apiErr', 
-        status: resp.status, 
-        message: data.error_message
-      };
-    }
-    
-    return res.status(200).json(data);
+    return res.status(resp.status).json(data);
   }
   catch (err) {
-    console.log(err);
-    if (err.reason === 'apiErr') {
-      return res.status(err.status).json({message: err.message});
-    }
 
     return res.status(500).json({error: error.message});
   }
+});
+
+router.get('/zomato', async (req, res) => {
+  const ZOMATO_URL = 'https://developers.zomato.com/api/v2.1/locations?';
+  const queryStr = req.url.split('?')[1];
+
+  const options = {
+    method: 'GET',
+    headers: {
+    'user-key': ZOMATO_API_KEY +'0',
+    'Accept' : 'application/json'
+    }
+  }
+
+  try {
+    let resp = await fetch(ZOMATO_URL + queryStr, options);
+    let data = await resp.json();
+    
+    return res.status(resp.status).json(data);
+  } catch(err) {
+
+    return res.status(500).json({message: err.message});
+  }
+
 });
 
 module.exports = router;
