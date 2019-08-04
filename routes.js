@@ -25,16 +25,18 @@ router.get('/geocode', async (req, res) => {
     let data = await resp.json();
     
     return res.status(resp.status).json(data);
+
   } catch (err) {
 
+    console.log(err);
     return res.status(500).json({error: error.message});
   }
 });
 
 router.get('/weatherbit', async (req, res) => {
-  const WEATHERBIT_URL = 'https://api.weatherbit.io/v2.0/current?';
+  const WEATHERBIT_URL = 'https://api.weatherbit.io/v2.0/current';
   const query = req.url.split('?')[1];
-  const queryStr = `${query}&key=${WEATHERBIT_API_KEY}`;
+  const queryStr = `?${query}&key=${WEATHERBIT_API_KEY}`;
 
   const options = {
     method: 'GET',
@@ -48,9 +50,37 @@ router.get('/weatherbit', async (req, res) => {
     let data = await resp.json();
 
     return res.status(resp.status).json(data);
+
   } catch (err) {
+
     console.log(err);
     return status(500).json(err);
+  }
+});
+
+router.get('/ticketmaster', async (req, res) => {
+  const TICKETMASTER_URL = 'https://app.ticketmaster.com/discovery/v2/events.json';
+  const size = 5;
+  const query = req.url.split('?')[1];
+  const queryStr = `?size=${size}&apikey=${TICKETMASTER_API_KEY}&${query}`;
+
+  const options = {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+
+  try {
+    let resp = await fetch(TICKETMASTER_URL + queryStr, options);
+    let data = await resp.json();
+    
+    return res.status(resp.status).json(data);
+
+  } catch (error) {
+
+    console.log(err);
+    return res.status(500).json(err);
   }
 });
 
@@ -73,6 +103,7 @@ router.get('/zomato', async (req, res) => {
     return res.status(resp.status).json(data);
   } catch(err) {
 
+    console.log(err);
     return res.status(500).json({message: err.message});
   }
 });
