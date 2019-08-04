@@ -2,7 +2,7 @@
 Want to know what's going on in your city or where to eat? Use NiteOut to find out! (Works best with US cities...)
 
 # Live Site
-Check it out the live [site](https://tranpeter08.github.io/NiteOut)
+Check it out the live [site](https://nite-out-01.herokuapp.com/)
 
 # Screenshots
 | <img alt ='Landing Page' src='https://i.imgur.com/Nlod4yG.png' width='350'> | <img alt ='Results Page' src='https://i.imgur.com/bBhRRR5.png' width='350'> | <img alt ='Results not in US Page' src='https://i.imgur.com/xlRITF9.png' width='350' >
@@ -21,6 +21,10 @@ Font End:
 - CSS 
 - Javascript 
 - jQuery
+
+Back End:
+- Node.js
+- Express
 
 3rd Party API's:
 - HTML5 Geolocation
