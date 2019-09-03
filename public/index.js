@@ -65,14 +65,14 @@ function displayTicketmasterData({_embedded}) {
   if (!_embedded) {
     noTicketmaster();
   } else {
-  $('.js-events').hide().html(`
-    <div class='js-border'>
-      <h3>Events</h3>
-      <ul>
-        ${_embedded.events.map((item, index)=> renderEvents(item)).join('')}
-      </ul>
-    </div>
-  `).delay(500).fadeIn('slow');
+    $('.js-events').hide().html(`
+      <div class='js-border'>
+        <h3>Events</h3>
+        <ul>
+          ${_embedded.events.map((item, index)=> renderEvents(item)).join('')}
+        </ul>
+      </div>
+    `).delay(500).fadeIn('slow');
   }
 }
 
