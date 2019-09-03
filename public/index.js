@@ -4,11 +4,11 @@ function showErr(err) {
   console.error(err);
 }
 
-function renderDateTime(aTime) {
-  if (!aTime) {
+function renderDateTime(dateTime) {
+  if (!dateTime) {
     return `Unavialable`;
   } else {
-    let date = new Date(aTime);
+    let date = new Date(dateTime);
     const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
     const weekDays = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
     let weekDay = weekDays[date.getDay()];
@@ -20,7 +20,7 @@ function renderDateTime(aTime) {
     let hour;
 
     if (milTime > 11) {
-      hour = milTime-12;
+      hour = milTime - 12;
       timePeriod = 'PM';
     } else {
       hour = milTime;
@@ -31,7 +31,7 @@ function renderDateTime(aTime) {
     }
 
     let minute = date.getMinutes();
-    minute = (minute <10) ? minute + '0': minute;
+    minute = minute < 10 ? minute + '0' : minute;
 
     return `${weekDay} ${month} ${day}, ${year} @ ${hour}:${minute} ${timePeriod}`;
   }
