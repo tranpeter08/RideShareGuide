@@ -316,7 +316,9 @@ function submitButtonClick() {
     getGeocodeAPI(cityState, handleGeoCodeData);
     renderResultHead(`for "${cityState}"`);
 
-    $('input').val("");
+    console.log($('#js-form'));
+
+    $('#js-form')[0].reset();
     $('.form-container').fadeOut(500);
 
     renderResetButton();
